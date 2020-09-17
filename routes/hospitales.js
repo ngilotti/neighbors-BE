@@ -34,12 +34,17 @@ router.post(
 );
 
 router.put(
-    '/:id', [],
+    '/:id', [
+        validarJWT,
+        check('cuit', 'El CUIT debe ser un numero').isNumeric(),
+        validarCampos
+    ],
     actualizarHospital
 );
 
 router.delete(
     '/:id',
+    validarJWT,
     borrarHospital
 );
 

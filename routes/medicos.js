@@ -40,12 +40,23 @@ router.post(
 );
 
 router.put(
-    '/:id', [],
+    '/:id', [
+        validarJWT,
+        check('nombre', 'El nombre del medico es requerido').not().isEmpty(),
+        check('apellido', 'El apellido del medico es requerido').not().isEmpty(),
+        check('dni', 'El dni del medico es requerido').not().isEmpty(),
+        check('dni', 'El dni debe ser un numero').isNumeric(),
+        check('matricula', 'La matricula del medico es requerida').not().isEmpty(),
+        check('matricula', 'La matricula debe ser un numero').isNumeric(),
+        check('hospital', 'Hospital id no valido').isMongoId(),
+        validarCampos
+    ],
     actualizarMedico
 );
 
 router.delete(
     '/:id',
+    validarJWT,
     borrarMedico
 );
 

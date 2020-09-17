@@ -38,7 +38,7 @@ const login = async(req, res = response) => {
         const token = await generarJWT(usuarioDb.id);
 
 
-        res.json({
+        res.status(202).json({
             ok: true,
             token
         });
@@ -54,6 +54,31 @@ const login = async(req, res = response) => {
 
 }
 
+const renewJWT = async(req, res = response) => {
+
+
+    const uid = req.uid;
+    try {
+        // Generar un TOKEN - JWT
+        const token = await generarJWT(uid);
+
+
+        res.status(202).json({
+            ok: true,
+            token: token
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({
+            ok: false,
+            msg: 'Ocurrio algo, comuniquese con el administrador'
+        });
+    }
+
+}
+
 module.exports = {
-    login
+    login,
+    renewJWT
 }

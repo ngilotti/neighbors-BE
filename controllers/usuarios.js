@@ -18,7 +18,7 @@ const getUsuarios = async(req, res = response) => {
             Usuario.countDocuments()
         ]);
 
-        res.status(400).json({
+        res.status(202).json({
             ok: true,
             usuario: usuario,
             total: total
