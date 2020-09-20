@@ -8,7 +8,7 @@ const getMedicos = async(req, res = response) => {
             .populate('usuario', 'email role img')
             .populate('hospital', 'razonSocial cuit img');
 
-        res.json({
+        res.status(200).json({
             ok: true,
             medico: medicos
         });
@@ -46,7 +46,7 @@ const crearMedico = async(req, res = response) => {
 
             const medicoDB = await medico.save();
 
-            res.json({
+            res.status(201).json({
                 ok: true,
                 medico: medicoDB
             });
@@ -73,7 +73,7 @@ const actualizarMedico = async(req, res = response) => {
 
             // Valido la existencia del medico
             if (!medico) {
-                res.status(400).json({
+                res.status(304).json({
                     ok: false,
                     msg: 'No se encontro ningun medico, revise el id'
                 });
@@ -86,7 +86,7 @@ const actualizarMedico = async(req, res = response) => {
 
             const medicoActualizado = await Medico.findByIdAndUpdate(mid, cambioMedico, { new: true });
 
-            res.status(200).json({
+            res.status(202).json({
                 ok: true,
                 msg: 'Actuaizado',
                 medico: medicoActualizado
@@ -125,7 +125,7 @@ const borrarMedico = async(req, res = response) => {
             await Medico.findByIdAndDelete(mid);
 
 
-            res.status(200).json({
+            res.status(202).json({
                 ok: true,
                 msg: 'Medico Eliminado'
             });

@@ -20,6 +20,9 @@ app.use(express.json());
 // Base de datos
 dbConection();
 
+// Directorio Publico
+app.use(express.static('public'));
+
 // ------------   Permisos   --------------
 // user: mean_user
 // pass: SKi6XjyPhCnAWdd6
