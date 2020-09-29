@@ -9,7 +9,6 @@ const { generarJWT } = require('../helpers/jwt');
 const getUsuarios = async(req, res = response) => {
 
         const desde = Number(req.query.desde) || 0;
-        console.log(desde);
 
         const [usuario, total] = await Promise.all([
             Usuario.find({}, 'nombre apellido dni email role google img')
@@ -101,7 +100,7 @@ const actualizarUsuario = async(req, res = response) => {
             }
 
             // Actualizar usuario
-            const { password, google, email, ...campos } = req.body;
+            const { password, google, email, dni, ...campos } = req.body;
 
             if (usuarioDB.email !== email) {
 
@@ -112,7 +111,11 @@ const actualizarUsuario = async(req, res = response) => {
                         msg: 'Ya existe un usuario con ese email'
                     });
                 }
+            } // end if
 
+
+
+            if (usuarioDB.dni !== dni) {
                 const existeDni = await Usuario.findOne({ dni });
                 if (existeDni) {
                     return res.status(400).json({
@@ -121,7 +124,19 @@ const actualizarUsuario = async(req, res = response) => {
                     });
                 }
             } // end if
-            campos.email = email;
+
+
+
+            if (!usuarioDB.google) {
+                campos.email = email;
+            } else if (usuarioDB.email !== email) {
+
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Usuarios de google no pueden cambiar su correo'
+                });
+            }
+            campos.dni = dni;
 
             const usuarioActualizado = await Usuario.findByIdAndUpdate(uid, campos, { new: true });
 

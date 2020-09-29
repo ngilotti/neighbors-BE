@@ -97,8 +97,13 @@ const retornaImg = (req, res = response) => {
         if (fs.existsSync(pathImg)) {
             res.sendFile(pathImg);
         } else {
-            const pathImg = path.join(__dirname, `../uploads/no-img.jpg`);
-            res.sendFile(pathImg);
+            if (tipo === 'usuarios' || tipo === 'medicos') {
+                const pathImg = path.join(__dirname, `../uploads/no-img-user.png`);
+                res.sendFile(pathImg);
+            } else {
+                const pathImg = path.join(__dirname, `../uploads/no-img.png`);
+                res.sendFile(pathImg);
+            }
         } // end if
 
     } // end retornaImg 
