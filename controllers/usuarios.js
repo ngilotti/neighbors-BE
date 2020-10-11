@@ -5,13 +5,14 @@ const Usuario = require('../models/usuario');
 const { generarJWT } = require('../helpers/jwt');
 
 
+// GET
 
 const getUsuarios = async(req, res = response) => {
 
         const desde = Number(req.query.desde) || 0;
 
         const [usuario, total] = await Promise.all([
-            Usuario.find({}, 'nombre apellido dni email role google img')
+            Usuario.find({}, 'nombre apellido dni telefono email role img habilitado')
             .skip(desde)
             .limit(5),
             Usuario.countDocuments()
@@ -26,9 +27,11 @@ const getUsuarios = async(req, res = response) => {
 
 
 
+// POST
+
 const createUsuarios = async(req, res = response) => {
 
-        const { email, password, nombre, apellido, dni } = req.body;
+        const { email, password, dni } = req.body;
 
 
 
@@ -81,6 +84,50 @@ const createUsuarios = async(req, res = response) => {
     } // end createUsuarios
 
 
+const createVecino = async(req, res = response) => {
+
+        const { dni, ...campos } = req.body;
+
+        try {
+
+            const existeDni = await Usuario.findOne({ dni });
+            if (existeDni) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'el dni ya fue registado'
+                });
+            }
+
+            campos.dni = dni;
+
+            const usuario = new Usuario(campos);
+
+            // Guardar Usuario
+            await usuario.save();
+
+            //Generar TOKEN - JWT
+            const token = await generarJWT(usuario.dni);
+
+            res.json({
+                ok: true,
+                usuario: usuario,
+                token
+            });
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                ok: false,
+                msg: 'Error inesperado... Revisar log'
+            });
+
+        }
+
+    } // end createVecino
+
+
+
+// PUT
 
 const actualizarUsuario = async(req, res = response) => {
 
@@ -155,42 +202,87 @@ const actualizarUsuario = async(req, res = response) => {
 
     } // end actualizarUsuario
 
-const borrarUsuario = async(req, res = response) => {
+const validarVecino = async(req, res = response) => {
 
-    const uid = req.params.id;
+        const { dni } = req.body;
 
-    try {
+        try {
 
-        const usuarioDB = await Usuario.findById(uid);
+            const usuarioDB = await Usuario.findOne({ dni });
 
-        if (!usuarioDB) {
-            return res.status(404).json({
+            if (!usuarioDB) {
+                return res.status(404).json({
+                    ok: false,
+                    msg: 'El dni es incorrecto' // no existe dni
+                });
+            } else if (usuarioDB.habilitado) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'El usuario ya fue validado'
+                });
+            } // end if
+
+            res.json({
+                ok: true,
+                usuario: usuarioDB.id
+            });
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
                 ok: false,
-                msg: 'No existe un usuario con ese id'
+                msg: 'Error inesperado consultar log'
             });
         }
 
-        await Usuario.findByIdAndDelete(uid);
+    } // end actualizarUsuario
 
 
-        res.json({
-            ok: true,
-            msg: "Usuario eliminado"
-        });
 
-    } catch (error) {
+// DELETE
 
-        console.log(error);
-        res.status(404).json({
-            ok: false,
-            msg: "Error inesperado, consultar al administrador"
-        });
-    }
-}
+const borrarUsuario = async(req, res = response) => {
+
+        const uid = req.params.id;
+
+        try {
+
+            const usuarioDB = await Usuario.findById(uid);
+
+            if (!usuarioDB) {
+                return res.status(404).json({
+                    ok: false,
+                    msg: 'No existe un usuario con ese id'
+                });
+            }
+
+            await Usuario.findByIdAndDelete(uid);
+
+
+            res.json({
+                ok: true,
+                msg: "Usuario eliminado",
+                usuario: usuarioDB
+            });
+
+        } catch (error) {
+
+            console.log(error);
+            res.status(404).json({
+                ok: false,
+                msg: "Error inesperado, consultar al administrador"
+            });
+        }
+    } // end borrarUsuario
+
+
+// Exports
 
 module.exports = {
     getUsuarios,
     createUsuarios,
     actualizarUsuario,
     borrarUsuario,
+    createVecino,
+    validarVecino
 }

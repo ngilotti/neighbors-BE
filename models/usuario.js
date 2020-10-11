@@ -11,36 +11,41 @@ const UsuarioSchema = Schema({
         required: true
     },
     dni: {
-        type: String,
-        unique: true
-    },
-    email: {
-        type: String,
+        type: Number,
         required: true,
         unique: true
     },
-    password: {
-        type: String,
+    telefono: {
+        type: Number,
         required: true,
-    },
-    img: {
-        type: String
     },
     role: {
         type: String,
         required: true,
         default: 'USER_ROLE'
+            // MASTER_ROLE / ADMIN_ROLE / VECINO_ROLE / LICENCIA_ROLE
     },
-    google: {
+    email: {
+        type: String,
+        unique: true
+    },
+    password: {
+        type: String,
+    },
+    img: {
+        type: String
+    },
+    habilitado: {
         type: Boolean,
         default: false,
+        required: true
     }
 });
 
 
 UsuarioSchema.method('toJSON', function() {
     const { __v, _id, password, ...object } = this.toObject();
-    object.u_id = _id;
+    object.uid = _id;
 
     return object;
 });

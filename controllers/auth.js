@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 
 const { generarJWT } = require('../helpers/jwt');
 const Usuario = require('../models/usuario');
-const { googleVerify } = require("../helpers/google-verfy");
 
 
 const login = async(req, res = response) => {
@@ -41,7 +40,8 @@ const login = async(req, res = response) => {
 
             res.status(202).json({
                 ok: true,
-                token
+                token,
+                usuario: usuarioDb
             });
 
 
@@ -56,108 +56,44 @@ const login = async(req, res = response) => {
     } // end login
 
 
-const googleSignIn = async(req, res = response) => {
-
-        const googleToken = req.body.token;
-
-        try {
-
-            const { name, email, picture } = await googleVerify(googleToken);
-
-            let nombreCortado = name.split(' ');
-            let nombre = nombreCortado[nombreCortado.length - 2];
-            let apellido = nombreCortado[nombreCortado.length - 1];
-
-
-            // Verificar email
-            const usuarioDb = await Usuario.findOne({ email });
-            let usuario;
-
-
-            if (!usuarioDb) {
-                // si no existe el usuario
-                usuario = new Usuario({
-                    nombre: nombre,
-                    apellido: apellido,
-                    email: email,
-                    password: '@@@',
-                    img: picture,
-                    google: true
-                });
-
-            } else {
-                // existe usuario
-                usuario = usuarioDb;
-                usuario.google = true;
-
-            } // end if
-
-
-            // Guardar en DB
-            await usuario.save();
-
-            // Generar un TOKEN - JWT
-            const token = await generarJWT(usuario.id);
-
-
-            res.status(202).json({
-                ok: true,
-                token: token
-            });
-
-        } catch (error) {
-            res.status(401).json({
-                ok: false,
-                msg: 'Token no es correcto',
-            });
-        } // end trycathc
-
-
-
-    } // end googleSignIn
-
-
-
-
 
 const renewJWT = async(req, res = response) => {
 
 
-    const uid = req.uid;
+        const uid = req.uid;
 
-    try {
+        try {
 
-        // Generar un TOKEN - JWT
-        const token = await generarJWT(uid);
+            // Generar un TOKEN - JWT
+            const token = await generarJWT(uid);
 
-        // Obtener usuario por uid
-        const usuarioDb = await Usuario.findById(uid);
+            // Obtener usuario por uid
+            const usuarioDb = await Usuario.findById(uid);
 
-        if (!usuarioDb) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'id no encontrado'
+            if (!usuarioDb) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'id no encontrado'
+                });
+            } // end if
+
+            res.status(202).json({
+                ok: true,
+                token: token,
+                usuario: usuarioDb
             });
-        } // end if
 
-        res.status(202).json({
-            ok: true,
-            token: token,
-            usuario: usuarioDb
-        });
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                ok: false,
+                msg: 'Ocurrio algo, comuniquese con el administrador'
+            });
+        }
 
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({
-            ok: false,
-            msg: 'Ocurrio algo, comuniquese con el administrador'
-        });
-    }
-
-}
+    } // end renewJWT
 
 module.exports = {
     login,
     renewJWT,
-    googleSignIn
 }

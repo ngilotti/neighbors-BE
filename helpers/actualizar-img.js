@@ -2,8 +2,8 @@ const fs = require('fs');
 
 
 const Usuario = require('../models/usuario');
-const Medico = require('../models/medicos');
-const Hospital = require('../models/hospital');
+// const Medico = require('../models/medicos');
+// const Hospital = require('../models/hospital');
 
 
 const borrarImagen = (path) => {
@@ -20,39 +20,39 @@ const actualizarImagen = async(tipo, id, nombreArchivo) => {
     let pathviejo = '';
     switch (tipo) {
 
-        case 'medicos':
+        // case 'medicos':
 
-            const medico = await Medico.findById(id);
-            if (!medico) {
-                console.log('No se encontro un medico con ese id');
-                return false;
-            }
+        //     const medico = await Medico.findById(id);
+        //     if (!medico) {
+        //         console.log('No se encontro un medico con ese id');
+        //         return false;
+        //     }
 
-            pathviejo = `./uploads/medicos/${medico.img}`;
-            borrarImagen(pathviejo);
+        //     pathviejo = `./uploads/medicos/${medico.img}`;
+        //     borrarImagen(pathviejo);
 
-            medico.img = nombreArchivo;
-            await medico.save();
-            return true;
+        //     medico.img = nombreArchivo;
+        //     await medico.save();
+        //     return true;
 
-            break;
+        //     break;
 
 
-        case 'hospitales':
+        // case 'hospitales':
 
-            const hospital = await Hospital.findById(id);
-            if (!hospital) {
-                console.log('No se encontro un hospital con ese id');
-                return false;
-            }
+        //     const hospital = await Hospital.findById(id);
+        //     if (!hospital) {
+        //         console.log('No se encontro un hospital con ese id');
+        //         return false;
+        //     }
 
-            pathviejo = `./uploads/hospitales/${hospital.img}`;
-            borrarImagen(pathviejo);
+        //     pathviejo = `./uploads/hospitales/${hospital.img}`;
+        //     borrarImagen(pathviejo);
 
-            hospital.img = nombreArchivo;
-            await hospital.save();
-            return true;
-            break;
+        //     hospital.img = nombreArchivo;
+        //     await hospital.save();
+        //     return true;
+        //     break;
 
 
         case 'usuarios':

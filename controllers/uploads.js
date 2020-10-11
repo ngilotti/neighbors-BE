@@ -15,7 +15,7 @@ const fileUpload = (req, res = response) => {
 
 
         // Validar tipos
-        const tiposValidos = ['hospitales', 'medicos', 'usuarios'];
+        const tiposValidos = ['usuarios'];
         if (!tiposValidos.includes(tipo)) {
             return res.status(400).json({
                 ok: false,
@@ -97,7 +97,7 @@ const retornaImg = (req, res = response) => {
         if (fs.existsSync(pathImg)) {
             res.sendFile(pathImg);
         } else {
-            if (tipo === 'usuarios' || tipo === 'medicos') {
+            if (tipo === 'usuarios') {
                 const pathImg = path.join(__dirname, `../uploads/no-img-user.png`);
                 res.sendFile(pathImg);
             } else {
