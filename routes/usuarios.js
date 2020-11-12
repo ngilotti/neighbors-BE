@@ -7,6 +7,7 @@ const { check } = require('express-validator');
 const {
 
     getUsuarios,
+    getAdmin,
     createUsuarios,
     actualizarUsuario,
     borrarUsuario,
@@ -26,6 +27,12 @@ router.get(
     '/',
     validarJWT,
     getUsuarios
+);
+
+router.get(
+    '/admin',
+    validarJWT,
+    getAdmin
 );
 
 

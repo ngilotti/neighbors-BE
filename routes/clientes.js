@@ -20,16 +20,18 @@ router.get(
 );
 
 router.post(
-
     '/', [
         validarJWT,
+        check('nombre', 'El nombre del cliente es necesario').not().isEmpty(),
         check('razonSocial', 'El nombre del cliente es necesario').not().isEmpty(),
         check('tipo', 'El tipo de cliente es necesario').not().isEmpty(),
         check('unidades', 'Las unidades son requeridas y deben representarse en formato numerico').isNumeric(),
-        check('cuit', 'El CUIT del hospital es necesaria').not().isEmpty(),
-        check('cuit', 'El CUIT debe ser un numero').isNumeric(),
-        check('provincia', 'La provincia es necesario').not().isEmpty(),
-        check('localidad', 'La localidad es necesario').not().isEmpty(),
+        check('cuit', 'El CUIT el requerido y deben representarse en formato numerico').isNumeric(),
+        check('direccion', 'El nombre del cliente es necesario').not().isEmpty(),
+        check('provincia', 'El nombre del cliente es necesario').not().isEmpty(),
+        check('localidad', 'El nombre del cliente es necesario').not().isEmpty(),
+        check('latitud', 'La provincia es necesario').not().isEmpty(),
+        check('longitud', 'La localidad es necesario').not().isEmpty(),
         validarCampos
     ], createClientes
 
@@ -41,10 +43,10 @@ router.post(
 router.put(
     '/:id', [
         validarJWT,
+        check('nombre', 'El nombre es necesario').not().isEmpty(),
+        check('unidades', 'Las unidades son requeridas').not().isEmpty(),
+        check('tipo', 'El tipo de cliente es requerido').not().isEmpty(),
         check('direccion', 'La direccion es necesaria').not().isEmpty(),
-        check('latitud', 'La latitud es necesaria').not().isEmpty(),
-        check('longitud', 'La longitud es necesaria').not().isEmpty(),
-        check('usuario', 'El usuario es requerido').not().isEmpty(),
         validarCampos
     ], actualizarClientes
 );

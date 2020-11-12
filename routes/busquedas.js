@@ -1,16 +1,17 @@
 /*
-    ruta: 'api/todo/:busqueda
+    ruta: 'api/todo/
 */
 const { Router } = require('express');
-
 const { validarJWT } = require('../middleWares/validar-jwt');
+
 const { getTodo, getDocumentosColeccion } = require('../controllers/busquedas');
 
 
 const router = Router();
 
 
-router.get('/:busqueda', validarJWT, getTodo),
-    router.get('/coleccion/:tabla/:busqueda', validarJWT, getDocumentosColeccion),
+router.get('/:busqueda', validarJWT, getTodo);
 
-    module.exports = router;
+router.get('/coleccion/:tabla/:busqueda', validarJWT, getDocumentosColeccion);
+
+module.exports = router;

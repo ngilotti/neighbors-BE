@@ -2,6 +2,9 @@ const { Schema, model } = require('mongoose');
 
 const ClienteSchema = Schema({
 
+    nombre: {
+        type: String,
+    },
     razonSocial: {
         type: String,
     },
@@ -36,14 +39,9 @@ const ClienteSchema = Schema({
     longitud: {
         type: String,
     },
-    usuario: {
+    admin: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario'
-    },
-    edit: {
-        type: Schema.Types.ObjectId,
-        ref: 'Usuario',
-        required: true
     },
     habilitado: {
         type: Boolean,
