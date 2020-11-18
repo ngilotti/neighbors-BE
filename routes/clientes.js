@@ -46,6 +46,7 @@ router.put(
         check('nombre', 'El nombre es necesario').not().isEmpty(),
         check('unidades', 'Las unidades son requeridas').not().isEmpty(),
         check('tipo', 'El tipo de cliente es requerido').not().isEmpty(),
+        check('admin', 'El admin es requerido').not().isEmpty(),
         check('direccion', 'La direccion es necesaria').not().isEmpty(),
         validarCampos
     ], actualizarClientes

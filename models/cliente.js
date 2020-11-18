@@ -37,7 +37,7 @@ const ClienteSchema = Schema({
         type: String,
     },
     longitud: {
-        type: String,
+        type: String
     },
     admin: {
         type: Schema.Types.ObjectId,

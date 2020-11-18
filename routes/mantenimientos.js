@@ -18,11 +18,15 @@ const {
     createProvincia,
     createSede,
     createTiposCliente,
+    borrarEvento,
+    borrarLocalidad,
+    borrarProvincia,
+    borrarSede,
     borrarTipoCliente
 } = require('../controllers/manteminientros');
 
-
 const router = Router();
+
 
 // GET
 
@@ -60,7 +64,7 @@ router.get(
 // POST
 
 router.post(
-    '/cargar-tipos', [
+    '/cargar-tipos-clientes', [
         validarJWT,
         check('nombre', 'El nombre del tipo de cliente es necesario').not().isEmpty(),
         validarCampos
@@ -69,7 +73,7 @@ router.post(
 );
 
 router.post(
-    '/cargar-provincia', [
+    '/cargar-provincias', [
         validarJWT,
         check('nombre', 'El nombre de la Provincia es necesario').not().isEmpty(),
         validarCampos
@@ -99,32 +103,43 @@ router.post(
 router.post(
     '/cargar-eventos', [
         validarJWT,
-        check('nombre', 'El nombre del tipo de cliente es necesario').not().isEmpty(),
+        check('nombre', 'El nombre del evento es necesario').not().isEmpty(),
         validarCampos
     ], createEvento
 
 );
 
 
-// PUT
-
-// router.put(
-//     '/:id', [
-//         validarJWT,
-//         check('nombre', 'El nombre del cliente es necesario').not().isEmpty(),
-//         validarCampos
-//     ], actualizarClientes
-// );
-
-
-
 // DELETE
 
 router.delete(
-    '/borrar-tipo-cliente/:id',
+    '/borrar-eventos/:id',
+    validarJWT,
+    borrarEvento
+);
+
+router.delete(
+    '/borrar-localidad/:id',
+    validarJWT,
+    borrarLocalidad
+);
+
+router.delete(
+    '/borrar-provincias/:id',
+    validarJWT,
+    borrarProvincia
+);
+
+router.delete(
+    '/borrar-sedes/:id',
+    validarJWT,
+    borrarSede
+);
+
+router.delete(
+    '/borrar-tipos-clientes/:id',
     validarJWT,
     borrarTipoCliente
-
 );
 
 
