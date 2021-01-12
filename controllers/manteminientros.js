@@ -29,10 +29,8 @@ const getEventos = async(req, res = response) => {
 }; // end getEventos
 
 const getLocalidad = async(req, res = response) => {
-    const pid = req.query.provincia;
-
     const [localidad] = await Promise.all([
-        Localidad.find({ pid }, 'nombre provincia habilitado')
+        Localidad.find({}, 'nombre provincia habilitado')
         .populate('provincia', 'nombre'),
         Localidad.countDocuments()
     ]);
@@ -42,6 +40,21 @@ const getLocalidad = async(req, res = response) => {
         localidades: localidad
     });
 }; // end getLocalidad
+
+const getLocalidadPorProv = async(req, res = response) => {
+    const pid = req.params.id;
+
+    const [localidad] = await Promise.all([
+        Localidad.find({ provincia: pid }, 'nombre provincia habilitado')
+        .populate('provincia', 'nombre'),
+        Localidad.countDocuments()
+    ]);
+
+    res.status(202).json({
+        ok: true,
+        localidades: localidad
+    });
+}; // end getLocalidadPorProv
 
 const getProvincia = async(req, res = response) => {
 
@@ -440,6 +453,7 @@ const borrarTipoCliente = async(req, res = response) => {
 module.exports = {
     getEventos,
     getLocalidad,
+    getLocalidadPorProv,
     getProvincia,
     getSedes,
     getTiposCliente,

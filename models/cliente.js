@@ -9,7 +9,8 @@ const ClienteSchema = Schema({
         type: String,
     },
     tipo: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'TipoCliente'
     },
     unidades: {
         type: Number,
@@ -23,12 +24,12 @@ const ClienteSchema = Schema({
         type: String,
     },
     provincia: {
-        type: String,
-        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Provincia',
     },
     localidad: {
-        type: String,
-        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Localidad'
     },
     img: {
         type: String

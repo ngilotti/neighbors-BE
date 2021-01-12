@@ -6,7 +6,6 @@ const { generarJWT } = require('../helpers/jwt');
 
 
 // GET
-
 const getUsuarios = async(req, res = response) => {
 
     const desde = Number(req.query.desde) || 0;
@@ -25,7 +24,6 @@ const getUsuarios = async(req, res = response) => {
     });
 }; // end getUsuarios
 
-
 const getAdmin = async(req, res = response) => {
 
     const [usuarios] = await Promise.all([
@@ -39,8 +37,8 @@ const getAdmin = async(req, res = response) => {
     });
 }; // end getAdmin
 
-// POST
 
+// POST
 const createUsuarios = async(req, res = response) => {
 
     const { email, password, dni } = req.body;
@@ -95,7 +93,6 @@ const createUsuarios = async(req, res = response) => {
 
 }; // end createUsuarios
 
-
 const createVecino = async(req, res = response) => {
 
     const { dni, ...campos } = req.body;
@@ -138,12 +135,8 @@ const createVecino = async(req, res = response) => {
 }; // end createVecino
 
 
-
 // PUT
-
 const actualizarUsuario = async(req, res = response) => {
-
-    // TODO: Validar token y comprobar si es el usuario correcto
 
     const uid = req.params.id;
 
@@ -250,9 +243,7 @@ const validarVecino = async(req, res = response) => {
 }; // end actualizarUsuario
 
 
-
 // DELETE
-
 const borrarUsuario = async(req, res = response) => {
 
     const uid = req.params.id;
@@ -289,7 +280,6 @@ const borrarUsuario = async(req, res = response) => {
 
 
 // Exports
-
 module.exports = {
     getUsuarios,
     getAdmin,

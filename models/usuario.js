@@ -22,8 +22,8 @@ const UsuarioSchema = Schema({
     role: {
         type: String,
         required: true,
-        default: 'USER_ROLE'
-            // MASTER_ROLE / ADMIN_ROLE / VECINO_ROLE / LICENCIA_ROLE
+        default: 'USER_ROLE',
+        // MASTER_ROLE / ADMIN_ROLE / VECINO_ROLE / LICENCIA_ROLE
     },
     email: {
         type: String,

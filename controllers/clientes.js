@@ -8,13 +8,12 @@ const { populate } = require('../models/usuario');
 
 const getClientes = async(req, res = response) => {
 
-    const desde = Number(req.query.desde) || 0;
-
     const [clientes, total] = await Promise.all([
         Cliente.find({}, 'nombre tipo unidades cid razonSocial cuit provincia localidad img direccion latitud longitud admin edit')
         .populate('admin', 'uid apellido nombre telefono img')
-        .skip(desde)
-        .limit(5),
+        .populate('tipo', 'tid nombre habilitado')
+        .populate('provincia', 'pid nombre habilitado')
+        .populate('localidad', 'lid nombre provincia habilitado'),
         Cliente.countDocuments()
     ]);
 
@@ -32,7 +31,6 @@ const createClientes = async(req, res = response) => {
     // TODO: falta validar por latitud y longitud tambien
     const uid = req.uid;
     const cliente = new Cliente({
-        edit: uid,
         ...req.body
     });
 
@@ -126,6 +124,9 @@ const actualizarClientes = async(req, res = response) => {
             });
 
         } // end if
+
+        campos.nombre = nombre;
+        campos.direccion = direccion;
 
         const clienteActualizado = await Cliente.findByIdAndUpdate(cid, campos, { new: true });
 

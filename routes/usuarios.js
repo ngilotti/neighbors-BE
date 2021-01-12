@@ -23,6 +23,7 @@ const { validarJWT } = require('../middleWares/validar-jwt');
 const router = Router();
 
 
+// GETS
 router.get(
     '/',
     validarJWT,
@@ -36,6 +37,7 @@ router.get(
 );
 
 
+// POSTS
 router.post(
     '/', [
         check('nombre', 'El nombre es obligatorio').not().isEmpty(),
@@ -64,6 +66,8 @@ router.post(
     createVecino
 );
 
+
+// PUTS
 router.put(
     '/validar', [
         validarJWT,
@@ -74,7 +78,6 @@ router.put(
     ],
     validarVecino
 );
-
 
 router.put(
     '/:id', [
@@ -92,6 +95,7 @@ router.put(
 );
 
 
+// DELETES
 router.delete(
     '/:id',
     validarJWT,

@@ -3,11 +3,11 @@ const { Schema, model } = require('mongoose');
 const UnidadSchema = Schema({
 
     padron: {
-        type: String,
+        type: Number,
         unique: true
     },
     lote: {
-        type: String,
+        type: Number,
         required: true,
         unique: true
     },
@@ -17,42 +17,40 @@ const UnidadSchema = Schema({
     superficie: {
         type: Number,
     },
-    Direccion: {
+    direccion: {
         type: String,
     },
     cliente: {
-        // propietario, inquilino
         type: Schema.Types.ObjectId,
         ref: 'Cliente',
     },
-    Situacion: {
-        // propietario, inquilino
-        type: String
+    vecino: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+    },
+    situacion: {
+        // 'Propietario' | 'Inquilino'
+        type: String,
     },
     latitud: {
         type: String,
-        unique: true
     },
     longitud: {
         type: String,
-        unique: true
     },
-    Comentario: {
+    comentario: {
         type: String,
     },
-    Estado: {
-        // vivienda, obra, lote vacio
+    estado: {
+        //  'Vivienda' | 'Obra' | 'Lote vacio',
         type: String,
     },
-    edit: {
-        type: Schema.Types.ObjectId,
-        ref: 'Usuario',
-        required: true
+    alta: {
+        type: Date
     },
     habilitado: {
         type: Boolean,
-        default: true,
-        required: true
+        default: false,
     }
 
 }, { collection: 'unidades' });

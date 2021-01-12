@@ -30,8 +30,6 @@ router.post(
         check('direccion', 'El nombre del cliente es necesario').not().isEmpty(),
         check('provincia', 'El nombre del cliente es necesario').not().isEmpty(),
         check('localidad', 'El nombre del cliente es necesario').not().isEmpty(),
-        check('latitud', 'La provincia es necesario').not().isEmpty(),
-        check('longitud', 'La localidad es necesario').not().isEmpty(),
         validarCampos
     ], createClientes
 

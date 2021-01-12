@@ -10,6 +10,7 @@ const { validarCampos } = require('../middleWares/validar-campos');
 const {
     getEventos,
     getLocalidad,
+    getLocalidadPorProv,
     getProvincia,
     getSedes,
     getTiposCliente,
@@ -29,7 +30,6 @@ const router = Router();
 
 
 // GET
-
 router.get(
     '/dame-tipos-clientes',
     validarJWT,
@@ -49,6 +49,12 @@ router.get(
 );
 
 router.get(
+    '/dame-localidad-prov/:id',
+    validarJWT,
+    getLocalidadPorProv,
+);
+
+router.get(
     '/dame-sedes',
     validarJWT,
     getSedes
@@ -62,7 +68,6 @@ router.get(
 
 
 // POST
-
 router.post(
     '/cargar-tipos-clientes', [
         validarJWT,
@@ -111,7 +116,6 @@ router.post(
 
 
 // DELETE
-
 router.delete(
     '/borrar-eventos/:id',
     validarJWT,

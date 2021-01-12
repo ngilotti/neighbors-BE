@@ -35,8 +35,9 @@ app.use('/api/clientes', require('./routes/clientes'));
 app.use('/api/upload', require('./routes/uploads'));
 app.use('/api/todo', require('./routes/busquedas'));
 app.use('/api/mantenimientos', require('./routes/mantenimientos'));
+app.use('/api/unidades', require('./routes/unidades'));
+app.use('/api/amenities', require('./routes/amenities'));
 
-// app.use('/api/unidades', require('./routes/unidades'));
 
 
 // levantar el be
