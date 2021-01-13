@@ -4,7 +4,13 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { createClientes, getClientes, actualizarClientes, borrarCliente } = require('../controllers/clientes');
+const {
+    actualizarClientes,
+    borrarCliente,
+    clientesPorAdmin,
+    createClientes,
+    getClientes,
+} = require('../controllers/clientes');
 
 const { validarCampos } = require('../middleWares/validar-campos');
 const { validarJWT } = require('../middleWares/validar-jwt');
@@ -12,13 +18,22 @@ const { validarJWT } = require('../middleWares/validar-jwt');
 
 const router = Router();
 
-
+// GETs
 router.get(
     '/',
     validarJWT,
     getClientes
 );
 
+router.get(
+    '/clientesPorAdmin/:id',
+    validarJWT,
+    clientesPorAdmin
+);
+
+
+
+// POSTs
 router.post(
     '/', [
         validarJWT,
@@ -38,6 +53,8 @@ router.post(
 );
 
 
+
+// PUTs
 router.put(
     '/:id', [
         validarJWT,
@@ -50,6 +67,9 @@ router.put(
     ], actualizarClientes
 );
 
+
+
+// DELETE
 router.delete(
     '/:id',
     validarJWT,

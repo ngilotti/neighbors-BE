@@ -5,7 +5,7 @@ const Cliente = require('../models/cliente');
 const { populate } = require('../models/usuario');
 
 
-
+// GETs
 const getClientes = async(req, res = response) => {
 
     const [clientes, total] = await Promise.all([
@@ -26,6 +26,23 @@ const getClientes = async(req, res = response) => {
 
 
 
+const clientesPorAdmin = async(req, res = response) => {
+
+    const uid = req.params.id;
+
+    const [clientes] = await Promise.all([
+        Cliente.find({ admin: uid }, 'nombre tipo unidades cid razonSocial cuit provincia localidad img direccion latitud longitud admin edit'),
+        Cliente.countDocuments()
+    ]);
+
+    res.status(202).json({
+        ok: true,
+        clientes: clientes
+    });
+}; // end getAdmin
+
+
+// POSTs
 const createClientes = async(req, res = response) => {
 
     // TODO: falta validar por latitud y longitud tambien
@@ -66,6 +83,7 @@ const createClientes = async(req, res = response) => {
 
 
 
+// PUTs
 const actualizarClientes = async(req, res = response) => {
 
     // TODO: Validar token y comprobar si es el usuario correcto
@@ -147,7 +165,7 @@ const actualizarClientes = async(req, res = response) => {
 
 
 
-
+// DELETEs
 const borrarCliente = async(req, res = response) => {
 
     const cid = req.params.id;
@@ -184,8 +202,9 @@ const borrarCliente = async(req, res = response) => {
 
 
 module.exports = {
-    getClientes,
-    createClientes,
     actualizarClientes,
-    borrarCliente
+    borrarCliente,
+    clientesPorAdmin,
+    createClientes,
+    getClientes,
 }
