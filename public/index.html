@@ -2,44 +2,22 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-signin-client_id" content="575192611056-rtv97pmo19npf3dk2ptkev7hrbn8mf5e.apps.googleusercontent.com">
-    <title>Demo Sign In</title>
-</head>
+    <base href="/" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="keywords" content="wrappixel, admin dashboard, angular dashboard, web dashboard, angular admin, angular, css3 dashboard, angular dashboard, admin pro admin angular dashboard, frontend, responsive angular admin template">
+    <meta name="description" content="Admin Pro is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Neighbors</title>
+    <link rel="canonical" href="https://www.wrappixel.com/templates/adminpro-angular-dashboard/" />
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.7ab08033957bd238a3a2.css"></head>
 
 <body>
-    <h1>Google Sign in</h1>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-
-
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-
-    <a href="#" onclick="signOut();">Sign out</a>
-
-    <script>
-        function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-
-            var id_token = googleUser.getAuthResponse().id_token;
-            console.log(id_token);
-        }
-
-        // Cerrar Secion
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function() {
-                console.log('User signed out.');
-            });
-        }
-    </script>
-
-
-
-</body>
+    <app-root></app-root>
+<script src="runtime-es2015.deb868e1b0ad4de323c9.js" type="module"></script><script src="runtime-es5.deb868e1b0ad4de323c9.js" nomodule defer></script><script src="polyfills-es5.75fe1244e3d6288f8f62.js" nomodule defer></script><script src="polyfills-es2015.701190e19596ebaa4c6a.js" type="module"></script><script src="main-es2015.5fbfe95c9c424d4d751d.js" type="module"></script><script src="main-es5.5fbfe95c9c424d4d751d.js" nomodule defer></script></body>
 
 </html>
