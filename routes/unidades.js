@@ -33,7 +33,6 @@ router.post(
         check('licencia', 'La licencia es necesaria').not().isEmpty(),
         check('direccion', 'La dirección es necesaria').not().isEmpty(),
         check('cliente', 'El cliente es necesario').not().isEmpty(),
-        check('vecino', 'El vecino es necesario'),
         check('estado', 'El estado es necesario').not().isEmpty(),
         validarCampos
     ], crearUnidad
